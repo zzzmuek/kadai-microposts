@@ -9,9 +9,13 @@
         <div>
           <p><%= micropost.content %></p>
         </div>
-          <% if current_user == micropost.user %>
-            <%= link_to 'Delete', micropost, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
+        <div style="display:inline-flex">
+          <% if current_user == micropost.user && %w[root user].any? { |name| current_page?(send("#{name}_path")) }
+ %>
+            <%= link_to 'Delete', micropost, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm mr-1' %>
           <% end %>
+          <%= render 'favorites/like_button', micropost: micropost %>
+        </div>
       </div>
     </li>
   <% end %>
